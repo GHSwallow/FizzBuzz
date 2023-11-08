@@ -1,3 +1,9 @@
+const wordsStartingWithB = [
+    'Buzz',
+    'Bang',
+    'Bong',
+]
+
 const prompt = require("prompt-sync")();
 maxNumberToPrintTo = selectNumber()
 fizzBuzz(maxNumberToPrintTo)
@@ -16,44 +22,41 @@ function selectNumber(){
 
 function fizzBuzz(maxNumber){
     for (let i = 1; i <= maxNumber; i++) {
-        let startOfTextArray = [];
-        let endOfTextArray = [];
+        let textArray = [];
 
         if (i % 3 === 0) {
-            startOfTextArray.push('Fizz')
+            textArray.push('Fizz')
         }
 
         if (i % 5 === 0) {
-            endOfTextArray.push('Buzz')
+            textArray.push('Buzz')
         }
 
         if (i % 7 === 0) {
-            endOfTextArray.push('Bang')
+            textArray.push('Bang')
         }
 
         if (i % 11 === 0) {
-            startOfTextArray = []
-            endOfTextArray.push('Bong')
+            textArray = []
+            textArray.push('Bong')
         }
 
         if (i % 13 === 0) {
-            startOfTextArray.push('Fezz')
+            let fizzInsertionIndex = 0
+            wordsStartingWithB.forEach((word) => {
+                fizzInsertionIndex = Math.max(fizzInsertionIndex, textArray.indexOf(word))
+            })
+            textArray.splice(fizzInsertionIndex, 0, 'Fezz')
         }
 
         if (i % 17 === 0) {
-            startOfTextArray.reverse()
-            endOfTextArray.reverse()
-            let temp = startOfTextArray
-            startOfTextArray = endOfTextArray
-            endOfTextArray = temp
+            textArray.reverse()
         }
 
-        if (startOfTextArray.length===0 && endOfTextArray.length===0){
+        if (textArray.length===0){
             console.log(i.toString())
         } else {
-            let startText = String(startOfTextArray).replaceAll(",", "")
-            let endText = String(endOfTextArray).replaceAll(",", "")
-            console.log(startText + endText)
+            console.log(String(textArray).replaceAll(",", ""))
         }
     }
 }
