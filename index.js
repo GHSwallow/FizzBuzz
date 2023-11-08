@@ -1,17 +1,17 @@
 for (let i = 1; i <= 100; i++) {
-    let text_to_print = ''
+    let textToPrint = ''
 
     if (i % 3 === 0) {
-        text_to_print += 'fizz'
+        textToPrint += 'fizz'
     }
 
     if (i % 5 === 0) {
-        text_to_print += 'buzz'
+        textToPrint += 'buzz'
     }
 
-    if (text_to_print===''){
-        text_to_print = i.toString()
+    if (textToPrint===''){
+        textToPrint = i.toString()
     }
 
-    console.log(text_to_print)
+    console.log(textToPrint)
 }
