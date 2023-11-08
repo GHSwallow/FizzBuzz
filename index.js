@@ -1,12 +1,37 @@
+const prompt = require("prompt-sync")();
+
 const wordsStartingWithB = [
     'Buzz',
     'Bang',
     'Bong',
 ]
 
-const prompt = require("prompt-sync")();
-maxNumberToPrintTo = selectNumber()
-fizzBuzz(maxNumberToPrintTo)
+const rules = [
+    fizzRule,
+    buzzRule,
+    bangRule,
+    bongRule,
+    fezzRule,
+    reverseRule,
+]
+
+fizzBuzz()
+
+function selectRulesToRun(){
+    let j = 0
+    console.log("select rules to run from the list (eg 0,3,4)")
+    rules.forEach((rule) => {
+        console.log(j + ': ' + rule.name)
+        j++
+    })
+    let input = prompt()
+    let rulesSelected = []
+    let rulesIndices = input.split(',')
+    rulesIndices.forEach((ruleIndex) => {
+        rulesSelected.push(rules[ruleIndex])
+    })
+    return rulesSelected
+}
 
 function selectNumber(){
     let input = Number(prompt("Select number to print up to (must be int)"))
@@ -20,38 +45,61 @@ function selectNumber(){
     return input
 }
 
-function fizzBuzz(maxNumber){
-    for (let i = 1; i <= maxNumber; i++) {
+function fizzRule(number, arr) {
+    if (number % 3 === 0) {
+        arr.push('Fizz')
+    }
+    return arr
+}
+
+function buzzRule(number, arr) {
+    if (number % 5 === 0) {
+        arr.push('Buzz')
+    }
+    return arr
+}
+
+function bangRule(number, arr) {
+    if (number % 7 === 0) {
+        arr.push('Bang')
+    }
+    return arr
+}
+
+function bongRule(number, arr) {
+    if (number % 11 === 0) {
+        arr = []
+        arr.push('Bong')
+    }
+    return arr
+}
+
+function fezzRule(number, arr) {
+    if (number % 13 === 0) {
+        let fizzInsertionIndex = 0
+        wordsStartingWithB.forEach((word) => {
+            fizzInsertionIndex = Math.max(fizzInsertionIndex, arr.indexOf(word))
+        })
+        arr.splice(fizzInsertionIndex, 0, 'Fezz')
+    }
+    return arr
+}
+
+function reverseRule(number, arr) {
+    if (number % 17 === 0) {
+        arr.reverse()
+    }
+    return arr
+}
+
+function fizzBuzz(){
+    maxNumberToPrintTo = selectNumber()
+    let rulesSelected = selectRulesToRun()
+    for (let i = 1; i <= maxNumberToPrintTo; i++) {
         let textArray = [];
-
-        if (i % 3 === 0) {
-            textArray.push('Fizz')
-        }
-
-        if (i % 5 === 0) {
-            textArray.push('Buzz')
-        }
-
-        if (i % 7 === 0) {
-            textArray.push('Bang')
-        }
-
-        if (i % 11 === 0) {
-            textArray = []
-            textArray.push('Bong')
-        }
-
-        if (i % 13 === 0) {
-            let fizzInsertionIndex = 0
-            wordsStartingWithB.forEach((word) => {
-                fizzInsertionIndex = Math.max(fizzInsertionIndex, textArray.indexOf(word))
-            })
-            textArray.splice(fizzInsertionIndex, 0, 'Fezz')
-        }
-
-        if (i % 17 === 0) {
-            textArray.reverse()
-        }
+        rulesSelected.forEach((rule) => {
+            textArray = rule(i, textArray)
+        })
 
         if (textArray.length===0){
             console.log(i.toString())
