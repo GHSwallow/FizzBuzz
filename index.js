@@ -1,31 +1,41 @@
-for (let i = 1; i <= 200; i++) {
-    let startOfTextToPrint = ''
-    let endOfTextToPrint = ''
+for (let i = 1; i <= 256; i++) {
+    let startOfTextArray = [];
+    let endOfTextArray = [];
 
     if (i % 3 === 0) {
-        startOfTextToPrint += 'Fizz'
+        startOfTextArray.push('Fizz')
     }
 
     if (i % 5 === 0) {
-        endOfTextToPrint += 'Buzz'
+        endOfTextArray.push('Buzz')
     }
 
     if (i % 7 === 0) {
-        endOfTextToPrint += 'Bang'
+        endOfTextArray.push('Bang')
     }
 
     if (i % 11 === 0) {
-        startOfTextToPrint = ''
-        endOfTextToPrint += 'Bong'
+        startOfTextArray = []
+        endOfTextArray.push('Bong')
     }
 
     if (i % 13 === 0) {
-        startOfTextToPrint += 'Fezz'
+        startOfTextArray.push('Fezz')
     }
 
-    if (startOfTextToPrint==='' && endOfTextToPrint===''){
-        startOfTextToPrint = i.toString()
+    if (i % 17 === 0) {
+        startOfTextArray.reverse()
+        endOfTextArray.reverse()
+        let temp = startOfTextArray
+        startOfTextArray = endOfTextArray
+        endOfTextArray = temp
     }
 
-    console.log(startOfTextToPrint + endOfTextToPrint)
+    if (startOfTextArray.length===0 && endOfTextArray.length===0){
+        console.log(i.toString())
+    } else {
+        let startText = String(startOfTextArray).replaceAll(",", "")
+        let endText = String(endOfTextArray).replaceAll(",", "")
+        console.log(startText + endText)
+    }
 }
